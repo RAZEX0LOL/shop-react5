@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 
-const Header = () => {
+export const Header = () => {
 	return (
 		<header className='bg-white shadow-md'>
 			<div className='container mx-auto flex justify-between items-center p-4'>
@@ -19,4 +19,3 @@ const Header = () => {
 		</header>
 	)
 }
-export default Header
