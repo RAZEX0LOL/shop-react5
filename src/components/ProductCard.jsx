@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import '../index.css'
 
-export const ProductCard = ({ product }) => {
+export const ProductCard = ({ product, addToCart }) => {
 	return (
 		<div className='bg-white rounded shadow p-4'>
 			<img
@@ -11,12 +11,20 @@ export const ProductCard = ({ product }) => {
 			/>
 			<h3 className='mt-2 font-bold text-lg'>{product.title}</h3>
 			<p className='text-gray-700'>{product.price} ₽</p>
-			<Link
-				to={`/product/${product.id}`}
-				className='button_card mt-4 inline-block bg-blue-500 px-4 py-2 rounded hover:bg-blue-600'
-			>
-				Подробнее
-			</Link>
+			<div className='mt-4 flex gap-4'>
+				<Link
+					to={`/product/${product.id}`}
+					className='button_card mt-4 inline-block bg-blue-500 px-4 py-2 rounded hover:bg-blue-600'
+				>
+					Подробнее
+				</Link>
+				<button
+					onClick={() => addToCart(product)}
+					className='bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600'
+				>
+					Добавить в корзину
+				</button>
+			</div>
 		</div>
 	)
 }
