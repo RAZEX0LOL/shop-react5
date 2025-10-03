@@ -1,26 +1,62 @@
-export const Cart = ({ cartItems, onRemove }) => {
+import { useEffect, useState } from 'react'
+
+export const Cart = ({ cartItems, onUpdateQuantity, onRemove, onSaveCart }) => {
+	const [discountCode, setDiscountCode] = useState('')
+	const [appliedDiscount, setAppliedDiscount] = useState(0)
+
+	const totalPrice = cartItems.reduce(
+		(sum, item) => sum + item.price * item.quantity,
+		0
+	)
+	const discountPrice = totalPrice - totalPrice * appliedDiscount
+
+	const handleApplyDiscount = () => {
+		if (discountCode.trim().toUpperCase() === 'SALE2025') {
+			setAppliedDiscount(0.1)
+		} else {
+			setAppliedDiscount(0)
+			alert('Неверный промокод!')
+		}
+	}
+
+	useEffect(() => {
+		localStorage.setItem('cartItems', JSON.stringify(cartItems))
+		if (onSaveCart) {
+			onSaveCart(cartItems)
+		}
+	}, [cartItems, onSaveCart])
+
 	return (
-		<div className='p-4 bg-white shadow rounded'>
-			<h2 className='text-xl font-bold mb-4'>Корзина</h2>
+		<div>
+			<h2>Ваша корзина!</h2>
 			{cartItems.length === 0 ? (
-				<p>Корзина пуста</p>
+				<p>Корзина пуста!</p>
 			) : (
-				<ul>
-					{cartItems.map(item => (
-						<li
-							key={item.id}
-							className='flex justify-between items-center mb-2'
-						>
-							<span>{item.title}</span>
-							<button
-								onClick={() => onRemove(item.id)}
-								className='text-red-500'
-							>
-								Удалить
-							</button>
-						</li>
-					))}
-				</ul>
+				<>
+					<div>
+						{cartItems.map(item => (
+							<div>
+								<div>
+									<img src='' alt='' />
+									<div>
+										<h3></h3>
+										<p></p>
+									</div>
+								</div>
+
+								<div>
+									<button></button>
+									<span></span>
+									<button></button>
+								</div>
+
+								<div>
+									<button></button>
+								</div>
+							</div>
+						))}
+					</div>
+				</>
 			)}
 		</div>
 	)
